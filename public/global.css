@@ -1,0 +1,22 @@
+div::-webkit-scrollbar-track,iframe::-webkit-scrollbar-track
+{
+  background-color: transparent;
+}
+
+div::-webkit-scrollbar,iframe::-webkit-scrollbar
+{
+  width: 5px;
+  background-color: transparent;
+}
+
+div::-webkit-scrollbar-thumb,iframe::-webkit-scrollbar-thumb
+{
+  border-radius: 5px;
+  background-color: #555;
+  border: none;
+}
+
+/* prevent scrolling under certain circumstances */
+body.disable-scroll {
+  overflow: hidden;
+}
