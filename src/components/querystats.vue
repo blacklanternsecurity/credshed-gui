@@ -23,8 +23,6 @@
     },
     methods: {
       show_querystats() {
-        this
-        console.log(this.$route.params.query)
         if (this.$route.params.query) {
           this.axios(
             '/search_stats/' + this.$route.params.query,

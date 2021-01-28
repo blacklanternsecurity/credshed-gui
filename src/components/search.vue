@@ -45,7 +45,6 @@
     },
     mounted() {
       var access_token = window.localStorage.getItem('access_token')
-      console.log(access_token)
       if (!access_token) {
         window.location.href = '/login'
       }
@@ -76,11 +75,6 @@
 
         var url = '/export_csv/' + encodeURIComponent(this.query)
 
-        // if GUI and API are hosted on the same server
-        /*if (process.env.VUE_APP_API_URL.toLowerCase().startsWith(window.location.origin.toLowerCase())) {
-          console.log('same')
-          window.open(url, '_blank');
-        } else {*/
         this.axios(
           url, 
           {
@@ -92,12 +86,12 @@
           }
         ).then(res => {
           this.download_progress = 'Download All'
-          console.log(res)
           var date = (new Date()).toISOString().substring(0, 10)
           fileDownload(res.data, `${date}_credshed_${this.query}.csv`)
         })
       },
       populate_accounts(accounts) {
+        this.skip_rows = new Set();
         ['e', 'u', 'p', 'h', 'm'].forEach(key_name => {
           if (! accounts.some(a => a[key_name].length)) {
             this.skip_rows.add(key_name)
