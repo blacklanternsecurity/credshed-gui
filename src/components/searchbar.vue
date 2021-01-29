@@ -10,6 +10,9 @@
         </div>
       </div>
     </form>
+    <div v-if="invalid_query" class="invalid-query">
+      Invalid query.
+    </div>
   </div>
 </template>
 
@@ -20,12 +23,19 @@
     name: 'searchbar',
     data() {
       return {
-        query: ''
+        query: '',
+        invalid_query: false
       }
     },
     methods: {
       search(e) {
         e.preventDefault()
+        if (!(this.is_email(this.query) || this.is_domain(this.query))) {
+          this.invalid_query = true
+          return
+        } else {
+          this.invalid_query = false
+        }
         this.axios(
           `/search`,
           {
@@ -72,6 +82,11 @@
 
   button#credshed-search {
     margin-right: 1em;
+  }
+
+  div.invalid-query {
+    font-size: 1.5em;
+    color: var(--red);
   }
 
 </style>

@@ -10,6 +10,26 @@ const app = createApp(credshed)
 app.mixin({
   methods: {
 
+    is_email(s) {
+      var email_regex = /^[\w][\w.+-]{0,100}@[\w][\w.-]{0,100}\.[A-Z]{2,8}$/i
+      var results = email_regex.exec(s)
+      if (results) {
+        return true
+      } else {
+        return false
+      }
+    },
+
+    is_domain(s) {
+      var domain_regex = /^[\w.]*\.[\w]{2,8}$/i
+      var results = domain_regex.exec(s)
+      if (results) {
+        return true
+      } else {
+        return false
+      }
+    },
+
     axios(endpoint, config) {
       var access_token = window.localStorage.getItem('access_token')
       if ((!access_token) && window.location.pathname != '/login') {
@@ -26,7 +46,7 @@ app.mixin({
       return axios(endpoint, new_config).catch(error => {
         if (window.location.pathname == '/login') {
           throw(error)
-        } else if (400 <= error.response['status'] && error.response['status'] < 500) {
+        } else if (401 <= error.response['status'] && error.response['status'] < 500) {
           window.location.href = `/login?url=${window.location.href}`
         }
       })
