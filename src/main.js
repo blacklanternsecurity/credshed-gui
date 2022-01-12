@@ -21,7 +21,7 @@ app.mixin({
     },
 
     is_domain(s) {
-      var domain_regex = /^[\w.]*\.[\w]{2,8}$/i
+      var domain_regex = /^[\w][\w.-]*\.[\w]{2,8}$/i
       var results = domain_regex.exec(s)
       if (results) {
         return true
